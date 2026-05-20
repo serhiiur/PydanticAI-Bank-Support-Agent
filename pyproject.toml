@@ -1,0 +1,19 @@
+[project]
+name = "pydantic-ai-bank-support-agent"
+version = "0.1.0"
+description = "Bank support agent based on Pydantic AI."
+readme = "README.md"
+authors = [{ name = "serhiiur", email = "serhiiur@duck.com" }]
+requires-python = ">=3.12, <3.13"
+dependencies = [
+  "dotenv>=0.9.9",
+  "pydantic-ai-slim[cli,logfire,openai,openrouter,web]>=1.93.0",
+  "pydantic-extra-types[phonenumbers,pycountry]>=2.11.1",
+  "pydantic-settings>=2.14.1",
+  "pydantic[email]>=2.13.4",
+  "sqlmodel>=0.0.38",
+]
+
+[dependency-groups]
+dev = ["aiosqlite>=0.22.1"]
+test = ["pydantic-evals>=1.93.0", "pytest>=9.0.3"]
