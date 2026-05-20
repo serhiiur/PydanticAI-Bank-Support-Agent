@@ -12,6 +12,7 @@ dependencies = [
   "pydantic-settings>=2.14.1",
   "pydantic[email]>=2.13.4",
   "sqlmodel>=0.0.38",
+  "typer>=0.25.1",
 ]
 
 [dependency-groups]
