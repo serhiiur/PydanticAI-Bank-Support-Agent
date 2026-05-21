@@ -5,17 +5,17 @@ from pydantic_extra_types.currency_code import Currency
 from pydantic_extra_types.payment import PaymentCardNumber
 
 from agent.core.tools import BaseBankAgentToolset
-from agent.dependencies import AgentDependencies
+from agent.dependencies import AgentDeps
 from agent.models import Transaction
 
-card_toolset = FunctionToolset[AgentDependencies](
+card_toolset = FunctionToolset[AgentDeps](
     require_parameter_descriptions=True,
     instructions=(
         "Use this toolset when the client asks to perform some operations with one's bank card."
         "Provide short and concise answers."
     ),
 )
-currency_toolset = FunctionToolset[AgentDependencies](
+currency_toolset = FunctionToolset[AgentDeps](
     require_parameter_descriptions=True,
     instructions=(
         "Use this toolset when the client asks to perform some operations with currencies"
@@ -26,7 +26,7 @@ currency_toolset = FunctionToolset[AgentDependencies](
 
 @currency_toolset.tool
 async def get_currency_exchange_rate(
-    ctx: RunContext[AgentDependencies],
+    ctx: RunContext[AgentDeps],
     from_currency: Currency,
     to_currency: Currency,
 ) -> Decimal:
@@ -42,7 +42,7 @@ async def get_currency_exchange_rate(
 
 @card_toolset.tool
 async def get_client_cards_activity_status(
-    ctx: RunContext[AgentDependencies],
+    ctx: RunContext[AgentDeps],
 ) -> dict[PaymentCardNumber, bool]:
     """Return activity status of all client's cards in the bank.
 
@@ -54,7 +54,7 @@ async def get_client_cards_activity_status(
 
 @card_toolset.tool
 async def get_card_balance(
-    ctx: RunContext[AgentDependencies],
+    ctx: RunContext[AgentDeps],
     card_number: PaymentCardNumber,
 ) -> Decimal:
     """Return current balance on the client's card.
@@ -68,7 +68,7 @@ async def get_card_balance(
 
 @card_toolset.tool
 async def get_card_transactions(
-    ctx: RunContext[AgentDependencies],
+    ctx: RunContext[AgentDeps],
     card_number: PaymentCardNumber,
     limit: int = 5,
 ) -> list[Transaction]:
@@ -84,7 +84,7 @@ async def get_card_transactions(
 
 @card_toolset.tool
 async def deactivate_card(
-    ctx: RunContext[AgentDependencies],
+    ctx: RunContext[AgentDeps],
     card_number: PaymentCardNumber,
 ) -> bool:
     """Deactivate the client's card in the bank.

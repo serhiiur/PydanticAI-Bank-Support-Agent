@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 
 @dataclass
-class AgentDependencies:
+class AgentDeps:
     """Dependencies to be used by the agent."""
 
     db: "BankDatabaseService"

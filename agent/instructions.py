@@ -1,10 +1,10 @@
 from pydantic_ai import RunContext
 
-from agent.dependencies import AgentDependencies
+from agent.dependencies import AgentDeps
 from agent.exceptions import ClientNotFound
 
 
-async def add_client_name(ctx: RunContext[AgentDependencies]) -> str:
+async def add_client_name(ctx: RunContext[AgentDeps]) -> str:
     """Add clients's name to the agent's instructions.
 
     If the client can't be identified, the corresponding message
