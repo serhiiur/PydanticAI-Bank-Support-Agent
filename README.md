@@ -46,6 +46,18 @@ agent/
 ```
 
 
+## Configuration
+
+All settings are defined in `agent/core/settings.py` and sourced from `.env`:
+
+| Variable | Description |
+|---|---|
+| `OPENROUTER_API_KEY` | API key for OpenRouter (model provider) |
+| `CURRENCY_API_URL` | ExchangeRate-API base URL |
+
+The model and agent instructions are configured in `agent.yml`.
+
+
 ## Setup
 
 1. **Clone and install dependencies**
@@ -102,23 +114,13 @@ uv run pytest agent/tests/
 Tests run with live LLM calls disabled (`ALLOW_MODEL_REQUESTS = False`).
 
 
-**Request flow:**
+## Request Flow
 
 1. `main.py` loads the agent from `agent.yml` and attaches `card_toolset` and `currency_toolset`.
 2. `instructions.py` dynamically prepends the identified client's name to the system prompt each turn.
 3. During a turn the agent calls tools; all calls pass through `BaseBankAgentToolset`, which converts domain exceptions to readable strings and raises `SkipToolExecution` on unexpected errors.
 4. The agent returns a structured `AgentOutput` containing the support reply, a 0–10 risk score, and a list of follow-up action recommendations.
 
-## Configuration
-
-All settings are defined in `agent/core/settings.py` and sourced from `.env`:
-
-| Variable | Description |
-|---|---|
-| `OPENROUTER_API_KEY` | API key for OpenRouter (model provider) |
-| `CURRENCY_API_URL` | ExchangeRate-API base URL |
-
-The model and agent instructions are configured in `agent.yml`.
 
 ## References
 
