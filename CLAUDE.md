@@ -6,19 +6,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Run the agent (CLI mode by default)
-uv run python agent/main.py
+uv run agent/main.py
 
 # Run with web UI
-uv run  python agent/main.py --web
+uv run agent/main.py --web
 
 # Run both CLI and web simultaneously
-uv run  python agent/main.py --cli --web --host 0.0.0.0 --port 8080
+uv run agent/main.py --cli --web --host 0.0.0.0 --port 8080
 
 # Seed the database with sample data (run once on first setup)
-uv run  python agent/scripts/seed.py
+uv run agent/scripts/seed.py
 
 # Run tests
-uv run  pytest agent/tests/
+uv run pytest agent/tests/
 
 # Install dependencies
 uv sync --all-groups
