@@ -6,7 +6,7 @@ The agent can be run as an interactive CLI session or as a web-based chat UI.
 
 
 <p align="center">
-  <img src="assets/images/cli.png" width=600>
+  <img src="assets/images/cli.png" width=1000>
 </p>
 
 <p align="center">
@@ -117,16 +117,16 @@ The model and agent instructions are configured in `agent.yml`.
 
 ```bash
 # Interactive CLI (default)
-uv run python agent/main.py
+uv run agent/main.py
 
 # Web chat UI at http://127.0.0.1:8000
-uv run  python agent/main.py --web
+uv run agent/main.py --web
 
 # Both CLI and web simultaneously
-uv run  python agent/main.py --cli --web
+uv run agent/main.py --cli --web
 
 # Custom host/port for the web server
-uv run  python agent/main.py --web --host 0.0.0.0 --port 8080
+uv run agent/main.py --web --host 0.0.0.0 --port 8080
 ```
 
 ## Running Tests
