@@ -3,9 +3,11 @@ from decimal import Decimal
 from pydantic_ai import FunctionToolset, RunContext
 from pydantic_extra_types.currency_code import Currency
 from pydantic_extra_types.payment import PaymentCardNumber
+from pydantic_extra_types.phone_numbers import PhoneNumber
 
 from agent.core.tools import BaseBankAgentToolset
 from agent.dependencies import AgentDeps
+from agent.exceptions import ClientNotFound
 from agent.models import Transaction
 
 card_toolset = FunctionToolset[AgentDeps](
@@ -38,6 +40,29 @@ async def get_currency_exchange_rate(
     :return: exchange rate for the given currency
     """
     return await ctx.deps.currency.get_exchange_rate(from_currency, to_currency)
+
+
+@card_toolset.tool
+async def identify_client(
+    ctx: RunContext[AgentDeps],
+    phone_number: str,
+) -> str:
+    """Identify the client by their phone number.
+
+    Must be called before any other card operations.
+
+    :param ctx: Agent's context providing access to the agent's dependencies
+    :param phone_number: client's phone number provided by the client
+    :return: confirmation message with the client's name
+    """
+    try:
+        ctx.deps.db.phone_number = PhoneNumber(phone_number)
+    except Exception:
+        raise ClientNotFound(
+            "Invalid phone number format. Please provide a valid phone number (e.g. +1 650-253-0000)."
+        )
+    client = await ctx.deps.db.get_client()
+    return f"Client identified as {client.name}."
 
 
 @card_toolset.tool
