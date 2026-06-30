@@ -1,6 +1,7 @@
-# CLAUDE.md
+# Bank-Support-Agent
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+A bank customer support agent built with PydanticAI. The agent identifies clients by phone number, provides account and card information, handles card deactivation requests, answers currency exchange queries, and returns structured responses that include a support message, a numeric risk level, and recommended follow-up actions.
+
 
 ## Commands
 
@@ -42,7 +43,3 @@ This is a PydanticAI-based bank customer support agent that can run in CLI or we
 **Data model:** `Client` → `Card` (many) → `Transaction` (many). All tables inherit ID and timestamp mixins from `core/database/mixins.py`.
 
 **Configuration:** `core/settings.py` reads from `.env`. Required env vars: `OPENROUTER_API_KEY`, `CURRENCY_API_URL`.
-
-## Testing Notes
-
-`agent/tests/conftest.py` sets `models.ALLOW_MODEL_REQUESTS = False` to block live LLM calls during tests. Use `pydantic-evals` (already a test dependency) for evaluation-style tests.
