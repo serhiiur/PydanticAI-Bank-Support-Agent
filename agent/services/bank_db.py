@@ -15,7 +15,11 @@ if TYPE_CHECKING:
 class BankDatabaseService:
     """Service to represent the database of the bank."""
 
-    def __init__(self, session: "AsyncSession", phone_number: PhoneNumber) -> None:
+    def __init__(
+        self,
+        session: "AsyncSession",
+        phone_number: PhoneNumber | None = None,
+    ) -> None:
         """Initialize the class attributes.
 
         :param session: database session object
@@ -30,6 +34,8 @@ class BankDatabaseService:
         :raises ClientNotFound: unless such client exists in the bank database
         :return: information about client from the database
         """
+        if self.phone_number is None:
+            raise ClientNotFound("Client is not identified yet.")
         stmt = select(Client).where(Client.phone == self.phone_number)
         if client := (await self.session.execute(stmt)).scalar():
             return client
