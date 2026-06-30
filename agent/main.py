@@ -9,7 +9,6 @@ import anyio
 from anyio import to_thread
 from httpx import AsyncClient
 from pydantic_ai import Agent
-from pydantic_extra_types.phone_numbers import PhoneNumber
 from sqlalchemy.ext.asyncio import AsyncSession
 from uvicorn import Config, Server
 
@@ -63,10 +62,9 @@ async def run_agent_cli(deps: AgentDeps, server: Server | None) -> None:
 
 async def main(args: AgentArgs) -> None:
     """Run the agent."""
-    client_phone_number = PhoneNumber("+1 650-253-0000")
     async with lifespan() as ls, anyio.create_task_group() as tg:
         deps = AgentDeps(
-            db=BankDatabaseService(ls.db_session, client_phone_number),
+            db=BankDatabaseService(ls.db_session),
             currency=CurrencyService(settings.currency.api_url, ls.http_client),
             logger=logging.getLogger("pydantic_ai"),
         )
